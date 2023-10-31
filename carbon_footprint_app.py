@@ -1,7 +1,8 @@
-import streamlit as st
+mport streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import datetime
 
 # Load sample data (replace with your own data loading code)
 data = pd.read_csv('carbon_footprint_data.csv')
@@ -36,6 +37,11 @@ def main():
         """,
         unsafe_allow_html=True
     )
+    
+    st.write('---')
+
+    # Dropdown to select time period
+    time_period = st.selectbox("Select Time Period", ['Daily', 'Weekly', 'Monthly', 'Yearly'])
 
     # Filter data based on selected time period
     if time_period == 'Daily':
@@ -53,6 +59,17 @@ def main():
     plt.figure(figsize=(10, 6))
     sns.lineplot(x='Date', y=selected_data.columns[1], data=selected_data)
     plt.xticks(rotation=45)
+
+    # Customize x-axis ticks and labels for different time periods
+    if time_period == 'Weekly':
+        week_start_dates = selected_data['Date'][selected_data['Date'].dt.weekday == 0]
+        week_start_labels = [d.strftime('%b %d') for d in week_start_dates]
+        plt.xticks(week_start_dates, week_start_labels, rotation=45)
+    elif time_period == 'Monthly':
+        plt.gca().xaxis.set_major_locator(plt.MaxNLocator(integer=True))
+        plt.gca().set_xticks(range(1, len(selected_data) + 1))
+        plt.gca().set_xticklabels([d.strftime('%b %d') for d in selected_data['Date']], rotation=45)
+
     st.pyplot(plt)
 
     # Bar chart
@@ -60,7 +77,21 @@ def main():
     plt.figure(figsize=(10, 6))
     sns.barplot(x='Date', y=selected_data.columns[1], data=selected_data)
     plt.xticks(rotation=45)
+
+    # Customize x-axis ticks and labels for different time periods in the bar chart
+    if time_period == 'Weekly':
+        week_start_dates = selected_data['Date'][selected_data['Date'].dt.weekday == 0]
+        week_start_labels = [d.strftime('%b %d') for d in week_start_dates]
+        plt.gca().set_xticks(week_start_dates)
+        plt.gca().set_xticklabels(week_start_labels, rotation=45)
+    elif time_period == 'Monthly':
+        plt.gca().xaxis.set_major_locator(plt.MaxNLocator(integer=True))
+        plt.gca().set_xticks(range(1, len(selected_data) + 1))
+        plt.gca().set_xticklabels([d.strftime('%b %d') for d in selected_data['Date']], rotation=45)
+
     st.pyplot(plt)
+
+    
 
     st.write('---')
 
