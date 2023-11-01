@@ -1,0 +1,43 @@
+import streamlit as st
+
+# Initialize session state to store shared data
+if 'goals' not in st.session_state:
+    st.session_state.goals = []
+
+# Function to add a new goal
+def add_goal(description, target_reduction, deadline):
+    new_goal = {
+        "description": description,
+        "target_reduction": target_reduction,
+        "deadline": deadline,
+        "progress": 0  # Initialize progress to 0
+    }
+    st.session_state.goals.append(new_goal)
+    return new_goal
+
+def main():
+    st.title("Goals Page")
+
+    # Create input fields for a new goal
+    goal_description = st.text_input("Goal Description")
+    goal_target_reduction = st.number_input("Target Emissions Reduction (in metric tons of CO2)")
+    goal_deadline = st.date_input("Deadline for Achievement")
+
+    # Button to add a new goal
+    if st.button("Add Goal"):
+        if goal_description and goal_target_reduction and goal_deadline:
+            new_goal = add_goal(goal_description, goal_target_reduction, goal_deadline)
+            st.success("New goal added!")
+
+    # Display user's existing goals
+    if st.session_state.goals:
+        st.write("Your Existing Goals:")
+        for i, goal in enumerate(st.session_state.goals):
+            st.write(f"**Goal {i + 1}**")
+            st.write(f"Description: {goal['description']}")
+            st.write(f"Target Emissions Reduction: {goal['target_reduction']} metric tons of CO2")
+            st.write(f"Deadline: {goal['deadline']}")
+            st.write(f"Progress: {goal['progress']} metric tons of CO2")
+
+if __name__ == "__main__":
+    main()
