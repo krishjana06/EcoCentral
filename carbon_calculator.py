@@ -1,0 +1,69 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def main():
+    st.title("Carbon Footprint Calculator")
+
+    # Section for daily activities
+    st.header("Electricity Usage")
+    electricity_usage = st.slider("Average Monthly Electricity Usage (kWh - listed in the Electricty Bill)", 0.0, 10000.0, 0.0)
+
+    st.header("Gas Consumption")
+    gas_consumption = st.slider("Average Monthly Gas Consumption (Gallons)", 0.0, 10000.0, 0.0)
+
+    # Section for transportation choices
+    st.header("Transportation Choices")
+    car_miles = st.slider("Miles Driven by Car per Month", 0.0, 10000.0, 0.0)
+    flight_hours = st.slider("Monthly Flight Hours", 0.0, 1000.0, 0.0)
+    commuting_distance = st.slider("Daily Commuting Distance (miles)", 0.0, 500.0, 0.0)
+
+    # Number of family members and explanation
+    st.header("Number of Family Members")
+    num_family_members = st.slider("Number of Family Members", 1, 18, 1)
+    st.write(f"You have {num_family_members} family member(s). More family members can contribute to higher carbon emissions.")
+
+    # Calculate button
+    if st.button("Calculate Carbon Footprint"):
+        # Define emission factors for each activity and mode of transportation
+        electricity_emission_factor = 0.45  # kg CO2 per kWh
+        gas_emission_factor = 2.0  # kg CO2 per cubic meter
+        car_emission_factor = 0.2  # kg CO2 per mile
+        flight_emission_factor = 200.0  # kg CO2 per hour
+        commuting_emission_factor = 0.1  # kg CO2 per mile
+
+        # Calculate carbon footprint based on user input
+        total_emissions = (
+            electricity_usage * electricity_emission_factor +
+            gas_consumption * gas_emission_factor +
+            car_miles * car_emission_factor +
+            flight_hours * flight_emission_factor +
+            commuting_distance * commuting_emission_factor
+        )
+
+        # Consider the number of family members in the calculation
+        total_emissions_per_person = total_emissions / num_family_members
+
+        # Display the result
+        st.subheader("Your Carbon Footprint")
+        st.write(f"Total Emissions: {total_emissions:.2f} kg CO2")
+        st.write(f"Emissions Per Person: {total_emissions_per_person:.2f} kg CO2 per person")
+
+        # Set a recommended maximum carbon footprint
+        recommended_max_emissions = 20 # Replace with your recommended value
+
+        # Compare the calculated emissions with the recommended maximum
+        if total_emissions_per_person <= recommended_max_emissions:
+            st.write("Your carbon footprint is within the recommended range. Great job!")
+        else:
+            st.write("Your carbon footprint is higher than the recommended range. Here are some suggestions to reduce it:")
+
+            if total_emissions > recommended_max_emissions * 1.2:
+                st.write("- Consider reducing car usage and using public transportation or carpooling.")
+                st.write("- Reduce energy consumption by using energy-efficient appliances and turning off lights when not in use.")
+            else:
+                st.write("- Reduce car usage by walking or biking for short distances.")
+                st.write("- Opt for flights with fewer layovers or consider alternatives like train or bus travel.")
+
+if __name__ == '__main__':
+    main()
