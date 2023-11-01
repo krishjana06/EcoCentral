@@ -1,0 +1,57 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load sample data (replace with your own data loading code)
+data = pd.read_csv('carbon_footprint_data.csv')
+
+# Convert the 'Date' column to a datetime type
+data['Date'] = pd.to_datetime(data['Date'])
+
+def main():
+    st.sidebar.header('Graph Data and Trends')
+    time_period = st.sidebar.radio('Select Time Period', ['Daily', 'Weekly', 'Monthly', 'Yearly'])
+
+    st.sidebar.write('---')
+
+    st.write(f"## {time_period} Carbon Footprint Trends")
+
+    # Select the appropriate column based on the chosen time period
+    if time_period == 'Daily':
+        selected_data = data[['Date', 'Daily_Carbon_Footprint']]
+        x_label = "Date"
+        y_label = "Daily Carbon Footprint"
+    elif time_period == 'Weekly':
+        selected_data = data[['Date', 'Weekly_Carbon_Footprint']]
+        selected_data['Week'] = selected_data['Date'].dt.strftime('%U')  # Calculate the week number
+        x_label = "Week"
+        y_label = "Weekly Carbon Footprint"
+    elif time_period == 'Monthly':
+        selected_data = data[['Date', 'Monthly_Carbon_Footprint']]
+        selected_data['Month'] = selected_data['Date'].dt.strftime('%b %Y')  # Calculate month in 'MMM YYYY' format
+        x_label = "Month"
+        y_label = "Monthly Carbon Footprint"
+    else:
+        selected_data = data[['Date', 'Yearly_Carbon_Footprint']]
+        selected_data['Year'] = selected_data['Date'].dt.strftime('%Y')  # Calculate the year
+        x_label = "Year"
+        y_label = "Yearly Carbon Footprint"
+
+    # Create a seamless graph with proper tick marks
+    fig, ax = plt.subplots(figsize=(15, 10))
+    ax.plot(selected_data[x_label], selected_data[selected_data.columns[1]])
+    ax.set(xlabel=x_label, ylabel=y_label)
+    ax.grid(True)
+
+    # Adjust x-axis ticks based on the time period
+    if time_period == 'Weekly':
+        ax.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
+    elif time_period == 'Monthly':
+        ax.set_xticklabels(selected_data[x_label], rotation=45, ha='right')
+    elif time_period == 'Yearly':
+        ax.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
+
+    st.pyplot(fig)
+
+if __name__ == '__main__':
+    main()
