@@ -1,0 +1,74 @@
+body, h1, p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+}
+
+.header {
+  background-image: url('/Users/khush/Downloads/leaf.jpg'); /* Update the background image path */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex; /* Add flex display */
+  flex-direction: column; /* Align children vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  text-align: center;
+  color: #1e7d34;
+  overflow: hidden; /* Added for the animation effect */
+}
+
+.overlay {
+  background: none; /* Removed the black overlay */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute; /* Changed from 'relative' to 'absolute' */
+}
+
+h1 {
+  font-size: 4rem; /* Increased font size */
+  margin-bottom: 5px; /* Reduced margin for closer spacing */
+  font-weight: bold; /* Added font weight for emphasis */
+}
+
+p {
+  font-size: 1.5rem; /* Increased font size */
+  margin: 5px 0; /* Reduced margin for closer spacing */
+  max-width: 600px;
+}
+
+.catchphrase {
+  font-size: 2rem; /* Increased font size */
+  font-weight: bold; /* Added font weight for emphasis */
+  margin-top: 10px; /* Reduced margin for closer spacing */
+  color: #5d9646;
+}
+
+.get-started-button {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px; /* Reduced margin for closer spacing */
+  transition: background-color 0.3s;
+}
+
+.get-started-button:hover {
+  background-color: #45a049;
+}
+
+p {
+  font-size: 1.2rem; /* Reset the font size */
+  color: #393939;
+  margin-top: 20px; /* Increased margin */
+  font-weight: bolder;
+}
