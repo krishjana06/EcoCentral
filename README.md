@@ -1,7 +1,7 @@
 # EcoCentral
 EcoCentral is a web application that helps users track their carbon footprint data. 
 
-Software used: Streamlit, Mongo DB, Bcrypt, Pytorch
+Software used: Streamlit, Mongo DB, Bcrypt, MatPlot, Pytorch
 Languages used: HTML, CSS, JavaScript, Python
 
 Carbon Footprint Calculator:
