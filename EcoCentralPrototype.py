@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-
 # Load sample data (replace with your own data loading code)
 data = pd.read_csv('carbon_footprint_data.csv')
 
@@ -121,24 +120,12 @@ def main():
         st.write(uploaded_data)
 
         # Visualization using uploaded data
+        # Visualization using uploaded data
         if not uploaded_data.empty:
             data_to_plot = uploaded_data
 
-            # Create a seamless graph with proper tick marks
-            fig, ax = plt.subplots(figsize=(15, 10))
-            ax.plot(data_to_plot['Date'], data_to_plot[time_period + '_Carbon_Footprint'])
-            ax.set(xlabel='Date', ylabel=f'{time_period} Carbon Footprint')
-
-            # Adjust x-axis ticks based on the time period
-            if time_period == 'Weekly':
-                ax.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
-            elif time_period == 'Monthly':
-                ax.set_xticklabels(data_to_plot['Date'], rotation=45, ha='right')
-            elif time_period == 'Yearly':
-                ax.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
-
-            ax.grid(True)
-            st.pyplot(fig)
+            # Display line chart
+            st.line_chart(data_to_plot.set_index('Date')[time_period + '_Carbon_Footprint'])
 
 
 
