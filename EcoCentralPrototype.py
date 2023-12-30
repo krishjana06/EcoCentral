@@ -111,7 +111,7 @@ def main():
         user_df.to_csv('user_data.csv', index=False)
         st.success("CSV file saved successfully!")
 
-     # Upload CSV File
+    # Upload CSV File
     uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
 
     if uploaded_file is not None:
@@ -120,14 +120,11 @@ def main():
         st.write(uploaded_data)
 
         # Visualization using uploaded data
-        # Visualization using uploaded data
         if not uploaded_data.empty:
             data_to_plot = uploaded_data
 
             # Display line chart
             st.line_chart(data_to_plot.set_index('Date')[time_period + '_Carbon_Footprint'])
-
-
 
 if __name__ == '__main__':
     main()
