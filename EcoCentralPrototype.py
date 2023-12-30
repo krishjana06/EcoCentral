@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+
 
 # Load sample data (replace with your own data loading code)
 data = pd.read_csv('carbon_footprint_data.csv')
