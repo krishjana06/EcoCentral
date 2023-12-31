@@ -59,7 +59,7 @@ def main():
         st.write(f"Emissions Per Person: {total_emissions_per_person:.2f} kg CO2 per person")
 
         # Set a recommended maximum carbon footprint
-        recommended_max_emissions = 10.0  # Replace with your recommended value
+        recommended_max_emissions = 10000.0  # Replace with your recommended value
 
         # Compare the calculated emissions with the recommended maximum
         if total_emissions_per_person <= recommended_max_emissions:
